@@ -9,7 +9,7 @@ with open('requirements.txt') as f:
     install_requires = [line.strip() for line in f]
 
 setuptools.setup(
-    name="waterproof-momotor",
+    name="waterproof_momotor",
     version="v0.0",
     author="impermeable",
     author_email="",
@@ -23,4 +23,4 @@ setuptools.setup(
 )
 
 # NOTE: setuptools.find_packages() assumes no weird folders in ./
-# Otherwise, mv /waterproof-momotor to /src/waterproof-momotor at some point
+# Otherwise, mv /waterproof_momotor to /src/waterproof_momotor at some point
