@@ -1,4 +1,6 @@
-def read(file, extention='auto'):
+from .._notebook import Notebook
+
+def read(file, extention='auto') -> Notebook:
     """
     Read and parse a waterproof notebook/exercisesheet or .v file.
 
