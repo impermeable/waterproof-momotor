@@ -9,6 +9,10 @@ test_files = [str(test_path / file) for file in os.listdir(test_path)]
 test_names = set([".".join(name.split('.')[:-1]) for name in test_files])
 # test_names are the names with extention
 
+def test_load_file():
+    notebook = load_file(test_path / 'tutorial.wpe')
+    assert len(notebook.blocks) == 233
+
 @pytest.mark.parametrize("file_name", test_names)
 def test_import_export(file_name):
     files = [file for file in test_files if file_name in file]
@@ -27,7 +31,7 @@ def test_import_export(file_name):
     except NotImplementedError:
         pass
     wpe = load_file(wpe_file)
-    # TODO
+    # TODO is this necessary?
     # assert v == wpe
     # waterproof's testcase:
     # expect imported v == json spul in .wpn:
