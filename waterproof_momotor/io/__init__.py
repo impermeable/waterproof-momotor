@@ -1,5 +1,5 @@
-from ._import import read
+from ._import import load
 
 __all__ = [
-    "read",
+    "load",
 ]

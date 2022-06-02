@@ -2,9 +2,9 @@ from .._notebook import Notebook, Block
 import json
 
 
-def read(file, extention="auto") -> Notebook:
+def load(file, extention="auto") -> Notebook:
     """
-    Read and parse a waterproof notebook/exercisesheet or .v file.
+    Load and parse a waterproof notebook/exercisesheet or .v file.
 
     Parameters
     ----------
@@ -27,14 +27,14 @@ def read(file, extention="auto") -> Notebook:
             content = file_object.read()
 
     if extention == "v":
-        return _read_v(content)
+        return _load_v(content)
     elif extention in ["wpn", "wpe"]:
-        return _read_wp(content)
+        return _load_wp(content)
     else:
         raise ValueError(f"Extention {extention} not supported.")
 
 
-def _read_wp(txt):
+def _load_wp(txt):
     JSON = json.loads(txt)
     blocks = []
     for json_block in JSON["blocks"]:
@@ -46,12 +46,12 @@ def _read_wp(txt):
             )
         else:
             block = Block(block_type=json_block["type"], text=json_block["text"])
-        # FIXME hint interpreted correctly? Shouldn't matter right.
+        # FIXME hint blocks may change in waterproof?
         blocks.append(block)
     nb = Notebook(blocks)
     return nb
 
 
-def _read_v(txt):
+def _load_v(txt):
     # TODO interpret notebook?
-    return txt
+    raise NotImplementedError()

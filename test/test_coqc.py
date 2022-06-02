@@ -1,11 +1,11 @@
 from pathlib import Path
 from waterproof_momotor._formatting import wp_formatter, lemmas
-from waterproof_momotor.io._import import read
+from waterproof_momotor.io._import import load
 from waterproof_momotor._coqc import coqc
 
 def test_coqc_tutorial():
     test_file = Path(__file__).parent / 'io' / 'test_porting' / 'tutorial.wpe'
-    notebook = read(test_file)
+    notebook = load(test_file)
     v = wp_formatter(notebook)
     result = coqc(v)
     assert result.returncode == 1
@@ -15,5 +15,5 @@ def test_coqc_tutorial():
 
 def test_lemmas_tutorial():
     test_file = Path(__file__).parent / 'io' / 'test_porting' / 'tutorial.wpe'
-    notebook = read(test_file)
+    notebook = load(test_file)
     lmms = lemmas(notebook)

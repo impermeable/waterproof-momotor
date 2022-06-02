@@ -1,4 +1,4 @@
-from waterproof_momotor.io._import import read
+from waterproof_momotor.io._import import load
 
 import pytest
 from pathlib import Path
