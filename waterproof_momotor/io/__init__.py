@@ -1,5 +1,5 @@
-from ._import import load
+from ._import import load_file
 
 __all__ = [
-    "load",
+    "load_file",
 ]

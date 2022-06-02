@@ -2,7 +2,7 @@ from .._notebook import Notebook, Block
 import json
 
 
-def load(file, extention="auto") -> Notebook:
+def load_file(file, extention="auto") -> Notebook:
     """
     Load and parse a waterproof notebook/exercisesheet or .v file.
 
@@ -27,15 +27,15 @@ def load(file, extention="auto") -> Notebook:
             content = file_object.read()
 
     if extention == "v":
-        return _load_v(content)
+        return _load_file_v(content)
     elif extention in ["wpn", "wpe"]:
-        return _load_wp(content)
+        return _load_file_wp(content)
     else:
         raise ValueError(f"Extention {extention} not supported.")
 
 
-def _load_wp(txt):
-    JSON = json.loads(txt)
+def _load_file_wp(txt):
+    JSON = json.load_files(txt)
     blocks = []
     for json_block in JSON["blocks"]:
         if json_block["type"] == "input":
@@ -52,6 +52,6 @@ def _load_wp(txt):
     return nb
 
 
-def _load_v(txt):
+def _load_file_v(txt):
     # TODO interpret notebook?
     raise NotImplementedError()

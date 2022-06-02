@@ -1,4 +1,4 @@
-from waterproof_momotor.io._import import load
+from waterproof_momotor.io._import import load_file
 
 import pytest
 from pathlib import Path
@@ -23,10 +23,10 @@ def test_import_export(file_name):
 
     # IMPORT TEST
     try:
-        v = load(v_file)
+        v = load_file(v_file)
     except NotImplementedError:
         pass
-    wpe = load(wpe_file)
+    wpe = load_file(wpe_file)
     # TODO
     # assert v == wpe
     # waterproof's testcase:
