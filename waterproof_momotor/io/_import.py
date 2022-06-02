@@ -35,7 +35,7 @@ def load_file(file, extention="auto") -> Notebook:
 
 
 def _load_file_wp(txt):
-    JSON = json.load_files(txt)
+    JSON = json.loads(txt)
     blocks = []
     for json_block in JSON["blocks"]:
         if json_block["type"] == "input":
