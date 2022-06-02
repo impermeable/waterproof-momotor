@@ -1,6 +1,9 @@
 from typing import List
 
 class Block:
+    """
+    Represents a waterproof block.
+    """
     block_type: str
     text: str
     start: bool
@@ -13,6 +16,9 @@ class Block:
         self.id = id
 
 class Notebook:
+    """
+    A list of Block objects
+    """
     blocks: List[Block]
 
     def __init__(self, blocks):
@@ -21,6 +27,7 @@ class Notebook:
 
     def _validate(self):
         assert isinstance(self.blocks, list)
+        for b in self.blocks: assert isinstance(b, Block)
 
     def code_blocks(self):
         return [block.text for block in self.blocks if block.block_type == "code"]

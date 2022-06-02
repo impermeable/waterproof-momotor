@@ -1,5 +1,6 @@
 import re
 from typing import Dict, List
+from ._notebook import Notebook
 """
 Format that is expected:
 we don't use marker lines, but use the lemma names themselves
@@ -7,18 +8,27 @@ Only keep characters that are utf8
 """
 _LEMMA_FORMAT = r'Lemma (\w+) ?:'
 
-def wp_formatter(notebook, post_amble = ""):
+def wp_formatter(notebook: Notebook, post_amble: str = "") -> str:
+    """
+    Concatenates the code blocks from the notebook, and adds a post amble.
+    """
     code_blocks = notebook.code_blocks()
     string = "\n".join(code_blocks)
     string + "\n" + post_amble + "\n" # I hope \n is ok and \r\n is not necessary?
     return string
 
-def lemma_names(notebook) -> List[str]:
+def lemma_names(notebook: Notebook) -> List[str]:
+    """
+    Finds the Lemma names using RegExp.
+    """
     code_blocks = notebook.code_blocks()
     string = "\n".join(code_blocks)
     return re.findall(_LEMMA_FORMAT, string)
 
-def lemmas(notebook) -> Dict[str, str]:
+def lemmas(notebook: Notebook) -> Dict[str, str]:
+    """
+    Finds the Lemma names using RegExp.
+    """
     code_blocks = notebook.code_blocks()
     string = "\n".join(code_blocks)
     prev_name_index = 0
