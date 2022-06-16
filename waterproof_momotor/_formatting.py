@@ -17,20 +17,17 @@ def wp_formatter(notebook: Notebook, post_amble: str = "") -> str:
     string + "\n" + post_amble + "\n" # I hope \n is ok and \r\n is not necessary?
     return string
 
-def lemma_names(notebook: Notebook) -> List[str]:
+def lemma_names(string) -> List[str]:
     """
     Finds the Lemma names using RegExp.
     """
-    code_blocks = notebook.code_blocks()
-    string = "\n".join(code_blocks)
     return re.findall(_LEMMA_FORMAT, string)
 
-def lemmas(notebook: Notebook) -> Dict[str, str]:
+def lemmas(string) -> Dict[str, str]:
     """
     Finds the Lemma names using RegExp.
     """
-    code_blocks = notebook.code_blocks()
-    string = "\n".join(code_blocks)
+    # TODO end of lemma will be indicated with Qed or Admitted?
     prev_name_index = 0
     lemma_names = []
     lemma_start_idx = []
@@ -45,4 +42,21 @@ def lemmas(notebook: Notebook) -> Dict[str, str]:
         lemmas_extracted[lemma] = string[lemma_start_idx[i]:lemma_start_idx[i+1]]
     return lemmas_extracted
     
+def insert_lemma(code: str, lemma_name: str, lemma_code: str):
+    """
+    Replace lemma code. Lemma must end with Admitted. or Qed.
+    """
+    start_lemma_index = code.index("Lemma " + lemma_name)
+    endings = []
+    for ending in ("Admitted.", "Qed."): # TODO remove Coq comments
+        try:
+            ending_index = code.index(ending, start_lemma_index)
+            endings.append(ending_index)
+        except ValueError:
+            pass 
+    assert len(endings) > 0
+    end_lemma_index = min(endings)
+    end_lemma_index = code.index(".", end_lemma_index) + 1
 
+    return code[:start_lemma_index] + lemma_code + code[end_lemma_index:]
+    
