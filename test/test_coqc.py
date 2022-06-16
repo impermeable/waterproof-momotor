@@ -16,4 +16,6 @@ def test_coqc_tutorial():
 def test_lemmas_tutorial():
     test_file = Path(__file__).parent / 'io' / 'test_porting' / 'tutorial.wpe'
     notebook = load_file(test_file)
-    lmms = lemmas(notebook)
+    v = wp_formatter(notebook)
+    lmms = lemmas(v)
+    assert len(lmms) > 0
