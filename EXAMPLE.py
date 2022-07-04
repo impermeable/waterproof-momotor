@@ -11,10 +11,10 @@ print(f"Loaded notebook with {len(notebook.blocks)} blocks")
 
 # =========
 # running a test suite is easy
-from waterproof_momotor import full_rapport
+from waterproof_momotor import recipe
 
 # Run a full report, using the same (empty) file as submission and solution
-full_rapport(student_file=test_file, solution_file=test_file)
+recipe(solution_file=test_file, student_files=[test_file])
 
 # =========
 # other functions

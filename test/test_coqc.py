@@ -1,7 +1,5 @@
 from pathlib import Path
-from waterproof_momotor._formatting import wp_formatter, lemmas
-from waterproof_momotor.io._import import load_file
-from waterproof_momotor._coqc import coqc
+from waterproof_momotor import wp_formatter, lemmas, load_file, coqc
 
 def test_coqc_tutorial():
     test_file = Path(__file__).parent / 'io' / 'test_porting' / 'tutorial.wpe'

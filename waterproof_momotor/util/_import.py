@@ -1,4 +1,4 @@
-from .._notebook import Notebook, Block
+from ._notebook import Notebook, Block
 import json
 
 
