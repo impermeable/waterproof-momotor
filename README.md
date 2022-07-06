@@ -29,7 +29,13 @@ integrity_report = CheckletNotebookIntegrity(master_notebook, student_notebook)
 ```
 The result of calling a Checklet will return a `CheckletReport` object, which
 does not contain a lot of information at the moment, but it does contain the 
-boolean attribute `result`, which indicates success or failure. Or, we can
+boolean attribute `result`, which indicates success or failure. 
+```
+if integrity_report.result == True:
+    print("Success!")
+```
+
+Or, we can
 check whether the 10th input cell does not contain illegal text (such as "Admitted.")
 ```
 report_single_txt = CheckletSingleCellText
