@@ -9,7 +9,9 @@ def load_file(file, extention="auto") -> Notebook:
     Parameters
     ----------
     file : file object, Path, str
-        reads content of file object or reads concent at string location
+        Reads content of file object or reads concent at string location
+    extention : {"auto", "wpn", "wpe", "v"}
+        The extention of the file. If not auto, this ensures a certain type is expected.
     """
     if hasattr(file, "read"):
         content = file.read()  # we didn't open it, so we don't close it.

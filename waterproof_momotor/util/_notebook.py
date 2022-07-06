@@ -16,12 +16,18 @@ class Block:
         self.id = id
 
     def __eq__(self, other):
+        """
+        Check if two blocks are equal.
+        """
         return (self.block_type == other.block_type) and \
             (self.text == other.text) and \
             self.start == other.start
         # not checking id
 
     def copy(self):
+        """
+        Returns a (deep) copy of the block.
+        """
         return Block(self.block_type, text=self.text, start=self.start, id=self.id)
 
 class Notebook:
@@ -31,17 +37,35 @@ class Notebook:
     blocks: List[Block]
 
     def __init__(self, blocks):
+        """
+        Construct a notebook from a list of Block objects.
+        """
         self.blocks = blocks
         self._validate()
 
     def _validate(self):
+        """
+        Validate notebook integrity.
+        """
         assert isinstance(self.blocks, list)
         for b in self.blocks: assert isinstance(b, Block)
 
     def code_blocks(self):
+        """
+        Returns all code blocks.
+        """
         return [block.text for block in self.blocks if block.block_type == "code"]
 
     def input_code(self) -> List[str]:
+        """
+        Concatenates code blocks from input blocks.
+
+        Returns
+        -------
+        blocks : List[str]
+            A list of strings, wherein the n-th index contains the code of the
+            n-th input block.
+        """
         blocks = []
         in_input_block = False
         code = []
@@ -57,6 +81,9 @@ class Notebook:
         return blocks
 
     def non_input_blocks(self):
+        """
+        Returns all blocks that are not within an input block and are not an input block.
+        """
         blocks = []
         in_input_block = False
         for block in blocks:
@@ -67,6 +94,9 @@ class Notebook:
         return blocks
 
     def non_input_equals(self, other):
+        """
+        Returns true if and only if all the non-input-blocks are equal.
+        """
         self_blocks = self.non_input_blocks()
         other_blocks = other.non_input_blocks()
         if len(self_blocks) != len(other_blocks):
@@ -74,6 +104,9 @@ class Notebook:
         return all(a == b for a, b in zip(self_blocks, other_blocks))
 
     def copy(self):
+        """
+        Returns a deep copy of the notebook.
+        """
         blocks_copy = [block.copy() for block in self.blocks]
         return Notebook(blocks_copy)
 
