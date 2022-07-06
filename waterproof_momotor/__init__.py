@@ -3,6 +3,7 @@ from .util._formatting import wp_formatter, lemma_names, lemmas, insert_lemma
 from .util._coqc import coqc
 from .util._import import load_file
 from .checklets.recipe import recipe
+from .checklets.checklet import CheckletReport
 from .checklets.check_notebook_integrity import CheckletNotebookIntegrity
 from .checklets.full_run_coqc import CheckletFullCoqc
 from .checklets.single_cell_coqc import CheckletSingleCellCoqc
@@ -17,6 +18,7 @@ __all__ = [
     "coqc",
     "load_file",
     "recipe",
+    "CheckletReport",
     "CheckletNotebookIntegrity",
     "CheckletFullCoqc",
     "CheckletSingleCellCoqc",
