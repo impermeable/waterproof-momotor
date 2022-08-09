@@ -4,7 +4,7 @@ import json
 
 def load_file(file, extention="auto") -> Notebook:
     """
-    Load and parse a waterproof notebook/exercisesheet or .v file.
+    Load a waterproof notebook/exercisesheet or .v file into a Notebook object.
 
     Parameters
     ----------
@@ -55,5 +55,6 @@ def _load_file_wp(txt):
 
 
 def _load_file_v(txt):
-    # TODO interpret notebook?
+    # TODO implement
+    # not needed (yet?)
     raise NotImplementedError()

@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<recipe xmlns="http://momotor.org/1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    id="waterproof">
+  <meta>
+    <name>waterproof</name>
+    <version>0.1</version>
+  </meta>
+
+  <checklets>
+    <checklet name="mtrchk-org-momotor-check-magic" version="~=2.0" id="check-magic-chk"/>
+    <checklet name="validate-integrity" id="validate-integrity-chk">
+      <repository type="local" src="checklets/validate_integrity/"/>
+    </checklet>
+    <checklet name="validate-content" id="validate-content-chk">
+      <repository type="local" src="checklets/validate_content/"/>
+    </checklet>
+  </checklets>
+
+  <steps> 
+    <!-- FIRST we need to be sure that the student handed in ONE .wpe file. Copied this from https://gitlab.tue.nl/momotor/recipe/jupyter-verify-tools/-/blob/master/recipe/recipe.xml -->
+    <step id="magic-check">
+      <checklet ref="check-magic-chk" />
+      <options>
+        <option name="stage" value="Checking for expected notebook" />
+        <option name="file-class" value="@product:#*.wpe" />
+        <option name="if-found" value="pass-secret" />
+        <option name="if-multiple-found" value="fail Multiple notebooks match. Supply only one" />
+        <option name="if-not-found" value="fail No notebooks matching the assignment found." />
+        <option name="rejected-file-class" value="rejected" />
+        <option name="feedback-fail" value="An expected marker was not found in any of the submitted files" />
+      </options>
+    </step>
+
+    <!-- THEN we need to be sure that the student handed in a .wpe file that looks like the master notebook file. -->
+    <step id="integrity-check">
+      <checklet ref="validate-integrity-chk" />
+      <dependencies>
+        <depends step="magic-check" />
+      </dependencies>
+        <option name="input-file-ref" value="@result#magic-check:matched" />
+        <option name="master-notebook-file-ref" value="" /><!-- how can the teacher specify the master notebook for each homework assignment? -->
+        <option name="verbose" value="true" />
+        <option name="render-input" value="true" />
+      </options>
+    </step>
+
+    <!-- FINALLY verify the actual content. Maybe split into separate chks and aggregate output? -->
+    <step id="content-check">
+      <checklet ref="validate-content-chk" />
+      <dependencies>
+        <depends step="integrity-check" />
+      </dependencies>
+        <option name="input-file-ref" value="@result#magic-check:matched" />
+        <option name="master-notebook-file-ref" value="" /><!-- how can the teacher specify the master notebook for each homework assignment? -->
+        <option name="verbose" value="true" />
+        <option name="render-input" value="true" />
+      </options>
+    </step>
+  </steps>
+</recipe>

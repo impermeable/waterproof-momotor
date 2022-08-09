@@ -40,3 +40,11 @@ class CoqcOutput:
             and self.stdout == other.stdout \
             and self.stderr == other.stderr
         return equal
+
+    @property
+    def has_error(self):
+        return b'Error:' in self.stderr
+
+    @property
+    def has_warning(self):
+        return b'Warning:' in self.stderr
