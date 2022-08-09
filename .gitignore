@@ -132,3 +132,4 @@ waterproof_momotor/temp.glob
 waterproof_momotor/temp.v
 .nra.cache
 *.aux
+waterproof_momotor/util/.temp.aux
