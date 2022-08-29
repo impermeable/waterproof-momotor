@@ -10,6 +10,8 @@ FILE_REF_OPTION = 'input-file-ref'
 
 MASTER_NOTEBOOK_OPTION = 'master-notebook-file-ref'
 
+FORBIDDEN_TERMS = ['Admitted']
+
 class ValidateContent(Checklet):
     class Meta:
         options = (
@@ -44,15 +46,19 @@ class ValidateContent(Checklet):
 
             # Pre-coq checks
             non_empty = len(student_code.strip()) > 0
-            admitted_in_text = 'dmitted' in student_code
-            VALID_CODE = non_empty and (not admitted_in_text) # and other stuff.
+            FORBIDDEN_TERM_IN_TEXT = False
+            for term in FORBIDDEN_TERMS:
+                if term in student_code:
+                    FORBIDDEN_TERM_IN_TEXT = True
+            VALID_CODE = non_empty and (not FORBIDDEN_TERM_IN_TEXT) # and other stuff.
 
             if VALID_CODE:
                 replaced_nb = master_nb.copy()
                 replaced_nb.replace_input_code(cell, student_code)
+                # TODO: only extract code cells up until this point?
                 replaced_code = wp_formatter(replaced_nb)
                 student_result = coqc(replaced_code)
-            
+
                 COMPILATION_ERRORS = student_result.has_error
                 RESULT = VALID_CODE and (not COMPILATION_ERRORS)
                 report += f"Compilation was {'not ' * (not RESULT)}successful.\n"
@@ -60,6 +66,19 @@ class ValidateContent(Checklet):
                 RESULT = False
                 report += "Invalid code.\n"
             RESULTS.append(RESULT)
+
+        # TODO: better report test_report: typing.Sequence[typing.Dict]
+        # I would like to use https://gitlab.tue.nl/momotor/checklet/mtrchk-org-momotor-lti-testreport/-/tree/version-2/src/mtrchk/org/momotor/lti/testreport
+        # report: typing.Sequence[typing.Dict] = [
+        #   blocks
+        # ]
+        # block: typing.Dict = {
+        #   cases
+        # }
+        # CASE is :
+        #   VALID_CODE, or
+        #   COMPILATION_ERROR
+
 
         return CheckletResult(
             outcome = Outcome.PASS if any(RESULTS) else Outcome.FAIL,

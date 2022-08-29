@@ -8,7 +8,7 @@
   </meta>
 
   <checklets>
-    <checklet name="mtrchk-org-momotor-check-magic" version="~=2.0" id="check-magic-chk"/>
+    <checklet name="mtrchk-org-momotor-check-files" version="~=1.0" id="check-files-chk"/>
     <checklet name="validate-integrity" id="validate-integrity-chk">
       <repository type="local" src="checklets/validate_integrity/"/>
     </checklet>
@@ -19,16 +19,15 @@
 
   <steps> 
     <!-- FIRST we need to be sure that the student handed in ONE .wpe file. Copied this from https://gitlab.tue.nl/momotor/recipe/jupyter-verify-tools/-/blob/master/recipe/recipe.xml -->
-    <step id="magic-check">
-      <checklet ref="check-magic-chk" />
+    <step id="check-files">
+      <checklet ref="check-files-chk" />
       <options>
-        <option name="stage" value="Checking for expected notebook" />
-        <option name="file-class" value="@product:#*.wpe" />
-        <option name="if-found" value="pass-secret" />
-        <option name="if-multiple-found" value="fail Multiple notebooks match. Supply only one" />
-        <option name="if-not-found" value="fail No notebooks matching the assignment found." />
-        <option name="rejected-file-class" value="rejected" />
-        <option name="feedback-fail" value="An expected marker was not found in any of the submitted files" />
+        <option name="input-file-ref" value="@product:#*.wpe" />
+        <option name="match" value="!*.wpe{{1}} => fail Expected exactly one Python file, got {{#}}."> <!-- Is this correct? -->
+        <!-- 
+        The following to pass-through the supplied master notebook?  
+        <option name="remaining-file-class" value="*.wpn">
+        -->
       </options>
     </step>
 
@@ -36,9 +35,9 @@
     <step id="integrity-check">
       <checklet ref="validate-integrity-chk" />
       <dependencies>
-        <depends step="magic-check" />
+        <depends step="check-files" />
       </dependencies>
-        <option name="input-file-ref" value="@result#magic-check:matched" />
+        <option name="input-file-ref" value="@product:#*.wpe" />
         <option name="master-notebook-file-ref" value="" /><!-- how can the teacher specify the master notebook for each homework assignment? -->
         <option name="verbose" value="true" />
         <option name="render-input" value="true" />
@@ -51,7 +50,7 @@
       <dependencies>
         <depends step="integrity-check" />
       </dependencies>
-        <option name="input-file-ref" value="@result#magic-check:matched" />
+        <option name="input-file-ref" value="@product:#*.wpe" />
         <option name="master-notebook-file-ref" value="" /><!-- how can the teacher specify the master notebook for each homework assignment? -->
         <option name="verbose" value="true" />
         <option name="render-input" value="true" />

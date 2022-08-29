@@ -43,7 +43,12 @@ class ValidateProperNotebook(Checklet):
         # But we should instruct students what is wrong with their notebook.
         RESULT = SAME_NB and SAME_CODES
 
+        if RESULT:
+            message = ""
+        else:
+            message = "The handed-in notebook does not match the desired notebook."
+
         return CheckletResult(
             outcome = Outcome.PASS if RESULT else Outcome.FAIL,
-            properties = {'report': 'some helpful diff or something'},
+            properties = {'report': message},
         )
