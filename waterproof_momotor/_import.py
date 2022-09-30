@@ -55,6 +55,5 @@ def _load_file_wp(txt):
 
 
 def _load_file_v(txt):
-    # TODO implement
-    # not needed (yet?)
+    # TODO implement as it is not (yet?) needed.
     raise NotImplementedError()

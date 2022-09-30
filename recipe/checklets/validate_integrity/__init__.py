@@ -1,7 +1,6 @@
 from mtrchk.org.momotor.base.checklet import Checklet
 from mtrchk.org.momotor.base.checklet.meta import OptionDefinition
-from mtrchk.org.momotor.base.checklet.result import CheckletResult, Outcome, CheckletResultPropsType, \
-    CheckletResultFilesType, NameClass
+from mtrchk.org.momotor.base.checklet.result import CheckletResult, Outcome
 
 from waterproof_momotor import load_file
 
@@ -44,9 +43,9 @@ class ValidateProperNotebook(Checklet):
         RESULT = SAME_NB and SAME_CODES
 
         if RESULT:
-            message = ""
+            message = "The correct notebook was handed in."
         else:
-            message = "The handed-in notebook does not match the desired notebook."
+            message = "The incorrect notebook was handed in, or the notebook is corrupted."
 
         return CheckletResult(
             outcome = Outcome.PASS if RESULT else Outcome.FAIL,
