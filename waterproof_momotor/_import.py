@@ -25,7 +25,7 @@ def load_file(file, extention="auto") -> Notebook:
                 )
             extention = file.split(".")[-1]
 
-        with open(file, 'r', encoding="utf8", errors='ignore') as file_object:
+        with open(file, "r", encoding="utf8", errors="ignore") as file_object:
             content = file_object.read()
 
     if extention == "v":

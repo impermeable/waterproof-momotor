@@ -4,9 +4,10 @@ from mtrchk.org.momotor.base.checklet.result import CheckletResult, Outcome
 
 from waterproof_momotor import load_file
 
-FILE_REF_OPTION = 'input-file-ref'
+FILE_REF_OPTION = "input-file-ref"
 
-MASTER_NOTEBOOK_OPTION = 'master-notebook-file-ref'
+MASTER_NOTEBOOK_OPTION = "master-notebook-file-ref"
+
 
 class ValidateProperNotebook(Checklet):
     class Meta:
@@ -18,7 +19,7 @@ class ValidateProperNotebook(Checklet):
             OptionDefinition(
                 MASTER_NOTEBOOK_OPTION,
                 multiple=False,
-            )
+            ),
         )
 
     def run(self) -> CheckletResult:
@@ -45,9 +46,11 @@ class ValidateProperNotebook(Checklet):
         if RESULT:
             message = "The correct notebook was handed in."
         else:
-            message = "The incorrect notebook was handed in, or the notebook is corrupted."
+            message = (
+                "The incorrect notebook was handed in, or the notebook is corrupted."
+            )
 
         return CheckletResult(
-            outcome = Outcome.PASS if RESULT else Outcome.FAIL,
-            properties = {'report': message},
+            outcome=Outcome.PASS if RESULT else Outcome.FAIL,
+            properties={"report": message},
         )

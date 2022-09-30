@@ -1,9 +1,11 @@
 from typing import List
 
+
 class Block:
     """
     Represents a waterproof block.
     """
+
     block_type: str
     text: str
     start: bool
@@ -19,9 +21,11 @@ class Block:
         """
         Check if two blocks are equal.
         """
-        return (self.block_type == other.block_type) and \
-            (self.text == other.text) and \
-            self.start == other.start
+        return (
+            (self.block_type == other.block_type)
+            and (self.text == other.text)
+            and self.start == other.start
+        )
         # not checking id
 
     def copy(self):
@@ -30,10 +34,12 @@ class Block:
         """
         return Block(self.block_type, text=self.text, start=self.start, id=self.id)
 
+
 class Notebook:
     """
     A list of Block objects
     """
+
     blocks: List[Block]
 
     def __init__(self, blocks):
@@ -48,7 +54,8 @@ class Notebook:
         Validate notebook integrity.
         """
         assert isinstance(self.blocks, list)
-        for b in self.blocks: assert isinstance(b, Block)
+        for b in self.blocks:
+            assert isinstance(b, Block)
 
     def code_blocks(self):
         """
@@ -89,7 +96,7 @@ class Notebook:
         for block in blocks:
             if block.block_type == "input":
                 in_input_block = block.start
-            if (not in_input_block or block.block_type == "input"):
+            if not in_input_block or block.block_type == "input":
                 blocks.append(block)
         return blocks
 
@@ -128,5 +135,5 @@ class Notebook:
 
         while self.blocks[ith_input_idx + 1].start != False:
             self.blocks.pop(ith_input_idx + 1)
-        
+
         self.blocks.insert(ith_input_idx + 1, Block("code", code))
