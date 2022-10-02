@@ -10,6 +10,22 @@ This repository contains:
 - recipe and checklets to give to momotor, located in `/recipe/checklets/`
 - utility functions to interact with waterproof and coqc, located in `/waterproof_momotor/` 
 
+
+## Checklets
+
+The recipe/checklets to give to momotor, located in `/recipe/checklets/`, hold the
+main routines to check waterproof notebook's correctness. Currently, there are:
+- the `ValidateIntegrity` checklet (at `/recipe/checklets/validate_integrity`) that
+(should) check whether the student handed in the same notebook as the master
+notebook (but possibly with
+their own code).
+- the `ValidateContent` checklet (at `/recipe/checklets/validate_content`) that
+(should) check whether the student's code is acceptable (no illegal syntax) and
+compiles in CoqC, hence solves the exercises. We rate each exercise separately,
+so for this we iteratively replace only ONE of the student's code blocks 
+in the master notebook, and check if it (still) compiles and hence successfully
+proves everything.
+
 ## Example use of utility functions
 We start by importing our code.
 ```
@@ -43,3 +59,4 @@ result = coqc(master_code)
 
 ## Full API
 
+TODO?
